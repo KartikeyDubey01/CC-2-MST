@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+using namespace std;
+
+vector<vector<string>> groupAnagrams(vector<string>& strs) {
+    unordered_map<string, vector<string>> answer;
+
+    for (string s : strs) {
+        string key = s;
+        sort(key.begin(), key.end());
+        answer[key].push_back(s);
+    }
+
+    vector<vector<string>> result;
+
+    for (auto x : answer) {
+        result.push_back(x.second);
+    }
+
+    return result;
+}
+
+int main() {
+    int n;
+
+    cout << "Enter number of strings: ";
+    cin >> n;
+
+    vector<string> strs(n);
+
+    cout << "Enter the strings:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> strs[i];
+    }
+
+    vector<vector<string>> result = groupAnagrams(strs);
+
+    cout << "\nGrouped Anagrams:\n";
+    for (auto group : result) {
+        for (string word : group) {
+            cout << word << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
