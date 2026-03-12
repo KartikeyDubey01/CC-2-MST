@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> dp;
+
+int find_cost(int index, vector<int>& nums) {
+    if (index >= nums.size())
+        return 0;
+
+    if (dp[index] != -1)
+        return dp[index];
+
+    int value = max(nums[index] + find_cost(index + 2, nums),
+                    find_cost(index + 1, nums));
+
+    dp[index] = value;
+    return value;
+}
+
+int rob(vector<int>& nums) {
+    dp.resize(nums.size(), -1);
+    int result = find_cost(0, nums);
+    return result;
+}
+
+int main() {
+    int n;
+
+    cout << "Enter number of houses: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    cout << "Enter money in each house: ";
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+
+    int result = rob(nums);
+
+    cout << "Maximum money that can be robbed: " << result << endl;
+
+    return 0;
+}
